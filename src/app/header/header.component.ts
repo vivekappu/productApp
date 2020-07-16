@@ -8,14 +8,16 @@ import {Router} from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  IsloggedIn=this.authService.IsloggedIn();
-  isCollapsed = false;
+   IsloggedIn(){
+    return this.authService.IsloggedIn();
+  }
+
   title = 'Product Management';
   links = [
     { path: '',  title: 'Home' , show: 'show'},
-    { path: 'addproduct',  title: 'AddProduct', show: (this.authService.IsloggedIn()) ? 'show' : 'hide'},
-    { path: 'login' , title: 'login' , show: (!this.authService.IsloggedIn()) ? 'show' : 'hide'},
-    { path: 'signup', title: 'signup', show: (!this.authService.IsloggedIn()) ? 'show' : 'hide'},
+    { path: 'addproduct',  title: 'AddProduct', show: (this.IsloggedIn()) ? 'show' : 'hide'},
+    { path: 'login' , title: 'login' , show: (!this.IsloggedIn()) ? 'show' : 'hide'},
+    { path: 'signup', title: 'signup', show: (!this.IsloggedIn()) ? 'show' : 'hide'},
 
   ];
   constructor(private authService: AuthService,private router:Router) {
@@ -24,13 +26,10 @@ export class HeaderComponent implements OnInit {
     window.location.reload();
   }
   logoutUser(){
-    console.log('logout')
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']).then(
-      () => this.refresh()
-    )
+    this.authService.logoutUser();
   }
   ngOnInit(): void {
+
   }
 
 }

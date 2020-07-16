@@ -30,7 +30,7 @@
   </div>
   <div class="form-group">
     <label for="productImgUrl">product image url</label>
-    <input type="file" [(ngModel)]="product.imageUrl" name="imageUrl" class="form-control" id="productImgUrl" placeholder="product image url" required>
+    <input type="text" [(ngModel)]="product.imageUrl" name="imageUrl" class="form-control" id="productImgUrl" placeholder="product image url" required>
   </div>
   <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Submit</button>
 </form>

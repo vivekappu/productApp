@@ -14,8 +14,9 @@ export class EditProductComponent implements OnInit {
   }
   submit(){
     console.log(this.product);
-    this.productsService.put(this.product).subscribe((data)=>console.log(data));
-  }
+    this.productsService.put(this.product).subscribe((data)=>{alert(data["message"]);
+      this.router.navigateByUrl('/');
+  },error => console.log(error));}
   ngOnInit(): void {
 
   }

@@ -21,6 +21,7 @@ import { FooterComponent } from './footer/footer.component';
 import {AuthGuard} from './shared/service/auth.guard';
 import {TokenInterceptorService} from './shared/service/token-interceptor.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import {TokenInterceptorService} from './shared/service/token-interceptor.servic
     MatIconModule,
     MatFormFieldModule,
     MaterialModule
+
   ],
   providers: [ProductsService, AuthService, AuthGuard,
     {
