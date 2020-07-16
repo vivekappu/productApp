@@ -2,25 +2,39 @@
   <h1  class="text-center"><span>Registration Form</span></h1>
   <mat-card-content>
 
-  <form #form="ngForm" class="my-form" (submit)="register()">
+  <form #form="ngForm" name="form" class="my-form" (ngSubmit)="form.form.valid && register()" >
     <mat-form-field class="full-width">
       <mat-label>First Name</mat-label>
-      <input  matInput [(ngModel)]="user.fname" placeholder="First name"  name="fname"  required>
+      <input  matInput [(ngModel)]="user.fname" placeholder="First name"  name="fname" #fname="ngModel" [ngClass]="{ 'is-invalid': form.submitted && fname.invalid }"required>
+      <div *ngIf="form.submitted && fname.invalid" class="invalid-feedback">
+        <div *ngIf="fname.errors.required">First Name is required</div>
+      </div>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>Last Name</mat-label>
-      <input  matInput [(ngModel)]="user.lname" placeholder="Last Name" name="lname"  required>
+      <input  matInput [(ngModel)]="user.lname" placeholder="Last Name" name="lname" #lname="ngModel" [ngClass]="{ 'is-invalid': form.submitted && lname.invalid }"  required>
+      <div *ngIf="form.submitted && lname.invalid" class="invalid-feedback">
+        <div *ngIf="lname.errors.required">Last Name is required</div>
+      </div>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>Email</mat-label>
-      <input  matInput [(ngModel)]="user.email" placeholder="Email" name="email" required>
+      <input  matInput [(ngModel)]="user.email" placeholder="Email" name="email" #email="ngModel"  [ngClass]="{ 'is-invalid': form.submitted && email.invalid }" required email>
+      <div *ngIf="form.submitted && email.invalid" class="invalid-feedback">
+        <div *ngIf="email.errors.required">Email is required</div>
+        <div *ngIf="email.errors.email">Email must be a valid email address</div>
+      </div>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label  >Password</mat-label >
-      <input  matInput type="password" [(ngModel)]="user.password" placeholder="Password"  name="password" required>
+      <input  matInput type="password" [(ngModel)]="user.password" placeholder="Password"  name="password" #password="ngModel"  [ngClass]="{ 'is-invalid': form.submitted && password.invalid }" required minlength="6"  required>
+      <div *ngIf="form.submitted && password.invalid" class="invalid-feedback">
+        <div *ngIf="password.errors.required">Password is required</div>
+        <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+      </div>
     </mat-form-field>
     <mat-card-actions>
-      <button mat-raised-button [disabled]="form.invalid"  type="submit" color="primary">REGISTER</button>
+      <button mat-raised-button   type="submit" color="primary">REGISTER</button>
     </mat-card-actions>
   </form>
 
