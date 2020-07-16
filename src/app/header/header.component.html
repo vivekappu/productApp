@@ -8,7 +8,8 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup" >
     <div class="navbar-nav">
-      <a class="nav-item nav-link text-dark {{link.show}}" *ngFor="let link of links" [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" >
+      <!-- if not logged show home,login,signup -->
+      <a class="nav-item nav-link text-dark " [ngClass]="{'hide':!IsloggedIn()&&link.title.toLowerCase()=='addproduct'||IsloggedIn()&&(link.title.toLowerCase()=='login'||link.title.toLowerCase()=='signup')}"  *ngFor="let link of links" [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" >
 
         {{link.title}}</a>
 

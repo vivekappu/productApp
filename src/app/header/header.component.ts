@@ -9,15 +9,16 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
    IsloggedIn(){
+
     return this.authService.IsloggedIn();
   }
 
   title = 'Product Management';
   links = [
-    { path: '',  title: 'Home' , show: 'show'},
-    { path: 'addproduct',  title: 'AddProduct', show: (this.IsloggedIn()) ? 'show' : 'hide'},
-    { path: 'login' , title: 'login' , show: (!this.IsloggedIn()) ? 'show' : 'hide'},
-    { path: 'signup', title: 'signup', show: (!this.IsloggedIn()) ? 'show' : 'hide'},
+    { path: '',  title: 'Home' },
+    { path: 'addproduct',  title: 'AddProduct' },
+    { path: 'login' , title: 'login' },
+    { path: 'signup', title: 'signup'},
 
   ];
   constructor(private authService: AuthService,private router:Router) {
