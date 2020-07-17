@@ -4,7 +4,18 @@
 .show{
   display:inherit;
 }
+h1{
+  color: darkslategray;
+  margin-top:10px;
+}
+.bg{
 
+  background-color:darkslategray;
+  color:whitesmoke;
+  padding:5px;
+  border:2px solid black;
+  border-radius: 10px 10px ;
+}
 
 
 /* Fixes dropdown menus placed on the right side */
