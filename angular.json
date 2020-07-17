@@ -90,10 +90,11 @@
               "src/assets"
             ],
             "styles": [
+
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": ["https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"]
+            "scripts": []
           }
         },
         "lint": {

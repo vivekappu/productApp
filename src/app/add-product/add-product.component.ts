@@ -16,9 +16,9 @@ export class AddProductComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.product);
+
     this.productsService.post(this.product).subscribe((data) => {
-        alert(data["message"]);
+        alert(data['message']);
         this.router.navigateByUrl('/');
       }
     );

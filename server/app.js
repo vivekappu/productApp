@@ -14,7 +14,15 @@ app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({ extended:true }))
 app.use(bodyParser.json())
 app.use(cors());
-
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, path.join(__dirname, "./public/images"));
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
+  },
+});
+var upload = multer({ storage: storage }).single("imageUrl");
 
 app.get('/products',function (req,res){
   productModel.find({}).exec().then(
@@ -22,7 +30,24 @@ app.get('/products',function (req,res){
   ).catch(e=>console.log(e))
 })
 app.post('/products',checkAuth,function(req,res){
-    productModel(req.body).save().then(
+  console.log("here")
+  console.log(req.file)
+  upload(req, res, function (err) {
+    if (err) {
+      console.log(err)
+      return res.end("Error uploading file.");
+    }
+
+    let data = {
+      productId: req.body.productId,
+      productName: req.body.productName,
+      productCode: req.body.productCode,
+      description:req.body.description,
+      price:req.body.price,
+      starRating:req.body.starRating,
+      imageUrl: req.file.originalname,
+    };
+    productModel(data).save().then(
       (data)=>res.json({
         message:'product added succesfully',
         data:data
@@ -30,7 +55,7 @@ app.post('/products',checkAuth,function(req,res){
     ).catch(e=>console.log(e))
 
 
-});
+})});
 /*------login------*/
 app.post('/login',function (req,res) {
   console.log(req.body.email)
