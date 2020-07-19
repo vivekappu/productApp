@@ -4,7 +4,7 @@ module.exports=(req,res,next)=>{
     const token=req.headers.authorization.split(" ")[1];
     const decoded=jwt.verify(token,'vivekkey');
     req.userData=decoded;
-    next();
+    next()
 
   }catch(error){
     console.log(error)

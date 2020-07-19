@@ -10,6 +10,7 @@ import {AuthService} from '../shared/service/auth.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
+  baseUrl='http://localhost:3000/'
   IsloggedIn=this.authService.IsloggedIn();
   products=null;
   productToEdit=null;
@@ -17,7 +18,12 @@ export class ProductListComponent implements OnInit {
   imageStatus='show image';
   constructor(private productsService:ProductsService,private router:Router,private authService:AuthService) { }
   loadProducts(){
-   this.productsService.getall().subscribe(data=>this.products=data);
+   this.productsService.getall().subscribe(data=> {
+     this.products = data;
+
+   }
+   );
+
   }
   toggleImage(){
     if(this.showImage==false){

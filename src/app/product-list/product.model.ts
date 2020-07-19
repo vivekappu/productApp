@@ -7,7 +7,7 @@ export class ProductModel{
     public description: number,
     public price: number,
     public starRating: number,
-    public imageUrl: File
+    public imageUrl: string
   ) {
   }
 }

@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const app=new express();
 const cors=require('cors');
+app.use(cors({ origin: "*" }));
 const bcrypt=require("bcryptjs")
 const userdb=require('./src/Model/user')
 const jwt=require("jsonwebtoken")
@@ -9,16 +10,17 @@ const bodyParser = require('body-parser');
 const productModel=require('./src/Model/product')
 const multer = require("multer");
 const checkAuth=require('./src/middleware/check-auth')
-app.use(express.urlencoded({extended:true}))
-app.use(express.static("./public"));
-app.use(bodyParser.urlencoded({ extended:true }))
-app.use(bodyParser.json())
+
+app.use(express.static(path.join(__dirname,"./public")));
+app.use(bodyParser.urlencoded({ extended:false}))
+app.use(bodyParser.json());
 app.use(cors());
 var storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, path.join(__dirname, "./public/images"));
   },
   filename: function (req, file, callback) {
+
     callback(null, file.originalname);
   },
 });
@@ -29,24 +31,24 @@ app.get('/products',function (req,res){
     data=>res.status(200).json(data)
   ).catch(e=>console.log(e))
 })
-app.post('/products',checkAuth,function(req,res){
-  console.log("here")
-  console.log(req.file)
+app.post('/products',function(req,res){
   upload(req, res, function (err) {
+  console.log('here');
+  console.log(req.body);
     if (err) {
       console.log(err)
       return res.end("Error uploading file.");
     }
-
-    let data = {
+    let data={
       productId: req.body.productId,
       productName: req.body.productName,
       productCode: req.body.productCode,
-      description:req.body.description,
-      price:req.body.price,
-      starRating:req.body.starRating,
-      imageUrl: req.file.originalname,
-    };
+      releaseDate: req.body.releaseDate,
+      description: req.body.description,
+      price: req.body.price,
+      starRating: req.body.starRating,
+      imageUrl: req.file.originalname
+    }
     productModel(data).save().then(
       (data)=>res.json({
         message:'product added succesfully',
@@ -187,15 +189,29 @@ app.post('/products/delete',checkAuth,function (req,res) {
   }
 });
 })
-app.put('/products/:id',checkAuth,function(req,res) {
-
-  console.log(req.params.id);
-  productModel.findByIdAndUpdate(req.params.id,req.body).exec().then(
-    data => res.status(200).json({
-      message:"product updated!!",
-      data:data
-    })
-  ).catch(e => console.log(e))
-})
+app.put('/products',checkAuth,function(req,res) {
+  upload(req, res, function (err) {
+    console.log(req.body);
+    if (err) {
+      console.log(err)
+      return res.end("Error uploading file.");
+    }
+    let data = {
+      productId: req.body.productId,
+      productName: req.body.productName,
+      productCode: req.body.productCode,
+      releaseDate: req.body.releaseDate,
+      description: req.body.description,
+      price: req.body.price,
+      starRating: req.body.starRating,
+      imageUrl: req.file.originalname
+    }
+    productModel.findByIdAndUpdate(req.body._id, data).exec().then(
+      data => res.status(200).json({
+        message: "product updated!!",
+        data: data
+      })
+    ).catch(e => console.log(e))
+  })});
 app.listen("3000");
 console.log("Port:3000")

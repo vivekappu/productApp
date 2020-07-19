@@ -1,37 +1,39 @@
 
-<form  #form="ngForm" (submit)="submit()" style="width:400px;margin:0 auto">
+<form  #form="ngForm" (submit)="submit()"  id="form" style="width:400px;margin:0 auto" enctype="multipart/form-data" >
   <div class="form-group">
     <label for="productId">Product Id</label>
-    <input type="text"  [(ngModel)]="product.productId" name="productId" class="form-control" id="productId"  placeholder="Enter Product Id" required>
+    <input type="text"  [(ngModel)]="product.productId" name="productId" class="form-control" id="productId"  placeholder="Enter Product Id" value="" required>
   </div>
   <div class="form-group">
     <label for="productName">product name</label>
-    <input type="text" [(ngModel)]="product.productName" name="productName" class="form-control" id="productName" placeholder="product name" required>
+    <input type="text" [(ngModel)]="product.productName" name="productName" class="form-control" id="productName" placeholder="product name" value="" required>
   </div>
   <div class="form-group">
     <label for="productCode">product code</label>
-    <input type="text" [(ngModel)]="product.productCode" name="productCode" class="form-control" id="productCode" placeholder="product code" required>
+    <input type="text" (change)="selectImage($event)"  [(ngModel)]="product.productCode" name="productCode" class="form-control" id="productCode" placeholder="product code" value="" required>
   </div>
   <div class="form-group">
     <label for="productDate">product date</label>
-    <input type="date" [(ngModel)]="product.releaseDate" name="releaseDate" class="form-control" id="productDate" placeholder="product date" required>
+    <input type="date" [(ngModel)]="product.releaseDate" name="releaseDate" class="form-control" id="productDate" placeholder="product date" value="" required>
   </div>
   <div class="form-group">
     <label for="productDescription">product description</label>
-    <input type="text" [(ngModel)]="product.description" name="description" class="form-control" id="productDescription" placeholder="product description" required>
+    <input type="text" [(ngModel)]="product.description" name="description" class="form-control" id="productDescription" placeholder="product description" value="" required>
   </div>
   <div class="form-group">
     <label for="productPrice">product price</label>
-    <input type="text" [(ngModel)]="product.price" name="price" class="form-control" id="productPrice" placeholder="product price" required>
+    <input type="text" [(ngModel)]="product.price" name="price" class="form-control" id="productPrice" placeholder="product price" value="" required>
   </div>
   <div class="form-group">
     <label for="productRating">product rating</label>
-    <mat-slider type="range" thumbLabel min=0 max=5 [(ngModel)]="product.starRating" name="starRating" class="form-control" id="productRating" placeholder="product rating" required></mat-slider>
+    <mat-slider type="range" thumbLabel min=0 max=5 [(ngModel)]="product.starRating" name="starRating" class="form-control" id="productRating" placeholder="product rating" value="" required></mat-slider>
   </div>
   <div class="form-group">
     <label for="productImgUrl">product image url</label>
-    <input type="text" [(ngModel)]="product.imageUrl" name="imageUrl" class="form-control" id="productImgUrl" placeholder="product image url" required>
+    <input type="file" (change)="selectImage($event)" [(ngModel)]="product.imageUrl" name="imageUrl" class="form-control" id="productImgUrl" placeholder="product image url" value="" required>
   </div>
-  <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Submit</button>
+  <div class="previewimg">
+    <img [src]="imageSrc" *ngIf="imageSrc" style="height: 200px; width:200px">
+  </div>
+  <button type="submit"  [disabled]="form.invalid"  class="btn btn-primary" >Submit</button>
 </form>
-
