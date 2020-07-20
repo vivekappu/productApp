@@ -38,6 +38,11 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+    const timer = JSON.parse(localStorage.getItem('timer'));
+    if (timer && (Date.now() > timer)) {
+      this.authService.logoutUser();
+      this.router.navigate(['/']);
+    }
   }
   delete(product){
     console.log(product);

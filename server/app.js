@@ -31,7 +31,7 @@ app.get('/products',function (req,res){
     data=>res.status(200).json(data)
   ).catch(e=>console.log(e))
 })
-app.post('/products',function(req,res){
+app.post('/products',checkAuth,function(req,res){
   upload(req, res, function (err) {
   console.log('here');
   console.log(req.body);

@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.user).subscribe(res=>{
       alert(res["message"]);
       localStorage.setItem('token', res["token"]);
-      this.router.navigateByUrl('/').then(
-        ()=>this.refresh()
-      )
+      const timeToLogin = Date.now() + 3600000; // one hour
+      localStorage.setItem('timer', JSON.stringify(timeToLogin));
+      this.router.navigateByUrl('/');
     },error => {
       alert(error.error.message);
     });
